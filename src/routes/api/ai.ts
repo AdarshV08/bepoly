@@ -59,7 +59,7 @@ const quizSchema = z.object({
 });
 
 const topicsSchema = z.object({
-  topics: z.array(z.string().min(2).max(80)).min(6).max(10),
+  topics: z.array(z.string().min(2).max(120)).min(4).max(12),
 });
 
 const paragraphSchema = z.object({
