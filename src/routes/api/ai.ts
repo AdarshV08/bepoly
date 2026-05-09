@@ -9,57 +9,50 @@ const MODEL = "google/gemini-3-flash-preview";
 const lessonSchema = z.object({
   title: z.string(),
   intro: z.string(),
-  sections: z
-    .array(
-      z.object({
-        heading: z.string(),
-        body: z.string(),
-        examples: z
-          .array(
-            z.object({
-              source: z.string(),
-              target: z.string(),
-              note: z.string().optional(),
-            })
-          )
-          .min(1),
-      })
-    )
-    .min(2),
-  keyTakeaways: z.array(z.string()).min(2),
+  sections: z.array(
+    z.object({
+      heading: z.string(),
+      body: z.string(),
+      examples: z.array(
+        z.object({
+          source: z.string(),
+          target: z.string(),
+          note: z.string().optional(),
+        })
+      ),
+    })
+  ),
+  keyTakeaways: z.array(z.string()),
 });
 
 const quizSchema = z.object({
-  questions: z
-    .array(
-      z.discriminatedUnion("type", [
-        z.object({
-          type: z.literal("mcq"),
-          q: z.string(),
-          options: z.array(z.string()).min(3).max(4),
-          answerIndex: z.number().int().min(0).max(3),
-          explain: z.string(),
-        }),
-        z.object({
-          type: z.literal("fill"),
-          sentence: z.string().describe("Sentence with ___ where the blank goes"),
-          answer: z.string(),
-          explain: z.string(),
-        }),
-        z.object({
-          type: z.literal("reorder"),
-          tokens: z.array(z.string()).min(3),
-          correctOrder: z.array(z.number().int()).min(3),
-          explain: z.string(),
-        }),
-      ])
-    )
-    .min(4)
-    .max(8),
+  questions: z.array(
+    z.discriminatedUnion("type", [
+      z.object({
+        type: z.literal("mcq"),
+        q: z.string(),
+        options: z.array(z.string()),
+        answerIndex: z.number().int(),
+        explain: z.string(),
+      }),
+      z.object({
+        type: z.literal("fill"),
+        sentence: z.string().describe("Sentence with ___ where the blank goes"),
+        answer: z.string(),
+        explain: z.string(),
+      }),
+      z.object({
+        type: z.literal("reorder"),
+        tokens: z.array(z.string()),
+        correctOrder: z.array(z.number().int()),
+        explain: z.string(),
+      }),
+    ])
+  ),
 });
 
 const topicsSchema = z.object({
-  topics: z.array(z.string().min(2).max(120)).min(4).max(12),
+  topics: z.array(z.string()),
 });
 
 const paragraphSchema = z.object({
