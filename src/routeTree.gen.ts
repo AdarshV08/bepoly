@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SessionReadRouteImport } from './routes/session/read'
+import { Route as SessionQuizRouteImport } from './routes/session/quiz'
+import { Route as SessionLessonRouteImport } from './routes/session/lesson'
+import { Route as SessionDoneRouteImport } from './routes/session/done'
+import { Route as OnboardingUploadRouteImport } from './routes/onboarding/upload'
+import { Route as OnboardingTopicRouteImport } from './routes/onboarding/topic'
+import { Route as OnboardingLevelRouteImport } from './routes/onboarding/level'
+import { Route as OnboardingLanguageRouteImport } from './routes/onboarding/language'
+import { Route as OnboardingFocusRouteImport } from './routes/onboarding/focus'
+import { Route as OnboardingDurationRouteImport } from './routes/onboarding/duration'
+import { Route as OnboardingBooksRouteImport } from './routes/onboarding/books'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SessionReadRoute = SessionReadRouteImport.update({
+  id: '/session/read',
+  path: '/session/read',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionQuizRoute = SessionQuizRouteImport.update({
+  id: '/session/quiz',
+  path: '/session/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionLessonRoute = SessionLessonRouteImport.update({
+  id: '/session/lesson',
+  path: '/session/lesson',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionDoneRoute = SessionDoneRouteImport.update({
+  id: '/session/done',
+  path: '/session/done',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingUploadRoute = OnboardingUploadRouteImport.update({
+  id: '/onboarding/upload',
+  path: '/onboarding/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingTopicRoute = OnboardingTopicRouteImport.update({
+  id: '/onboarding/topic',
+  path: '/onboarding/topic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingLevelRoute = OnboardingLevelRouteImport.update({
+  id: '/onboarding/level',
+  path: '/onboarding/level',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingLanguageRoute = OnboardingLanguageRouteImport.update({
+  id: '/onboarding/language',
+  path: '/onboarding/language',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingFocusRoute = OnboardingFocusRouteImport.update({
+  id: '/onboarding/focus',
+  path: '/onboarding/focus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingDurationRoute = OnboardingDurationRouteImport.update({
+  id: '/onboarding/duration',
+  path: '/onboarding/duration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingBooksRoute = OnboardingBooksRouteImport.update({
+  id: '/onboarding/books',
+  path: '/onboarding/books',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiAiRoute: typeof ApiAiRoute
+  OnboardingBooksRoute: typeof OnboardingBooksRoute
+  OnboardingDurationRoute: typeof OnboardingDurationRoute
+  OnboardingFocusRoute: typeof OnboardingFocusRoute
+  OnboardingLanguageRoute: typeof OnboardingLanguageRoute
+  OnboardingLevelRoute: typeof OnboardingLevelRoute
+  OnboardingTopicRoute: typeof OnboardingTopicRoute
+  OnboardingUploadRoute: typeof OnboardingUploadRoute
+  SessionDoneRoute: typeof SessionDoneRoute
+  SessionLessonRoute: typeof SessionLessonRoute
+  SessionQuizRoute: typeof SessionQuizRoute
+  SessionReadRoute: typeof SessionReadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +208,108 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/session/read': {
+      id: '/session/read'
+      path: '/session/read'
+      fullPath: '/session/read'
+      preLoaderRoute: typeof SessionReadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/quiz': {
+      id: '/session/quiz'
+      path: '/session/quiz'
+      fullPath: '/session/quiz'
+      preLoaderRoute: typeof SessionQuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/lesson': {
+      id: '/session/lesson'
+      path: '/session/lesson'
+      fullPath: '/session/lesson'
+      preLoaderRoute: typeof SessionLessonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/done': {
+      id: '/session/done'
+      path: '/session/done'
+      fullPath: '/session/done'
+      preLoaderRoute: typeof SessionDoneRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/upload': {
+      id: '/onboarding/upload'
+      path: '/onboarding/upload'
+      fullPath: '/onboarding/upload'
+      preLoaderRoute: typeof OnboardingUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/topic': {
+      id: '/onboarding/topic'
+      path: '/onboarding/topic'
+      fullPath: '/onboarding/topic'
+      preLoaderRoute: typeof OnboardingTopicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/level': {
+      id: '/onboarding/level'
+      path: '/onboarding/level'
+      fullPath: '/onboarding/level'
+      preLoaderRoute: typeof OnboardingLevelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/language': {
+      id: '/onboarding/language'
+      path: '/onboarding/language'
+      fullPath: '/onboarding/language'
+      preLoaderRoute: typeof OnboardingLanguageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/focus': {
+      id: '/onboarding/focus'
+      path: '/onboarding/focus'
+      fullPath: '/onboarding/focus'
+      preLoaderRoute: typeof OnboardingFocusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/duration': {
+      id: '/onboarding/duration'
+      path: '/onboarding/duration'
+      fullPath: '/onboarding/duration'
+      preLoaderRoute: typeof OnboardingDurationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/books': {
+      id: '/onboarding/books'
+      path: '/onboarding/books'
+      fullPath: '/onboarding/books'
+      preLoaderRoute: typeof OnboardingBooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiAiRoute: ApiAiRoute,
+  OnboardingBooksRoute: OnboardingBooksRoute,
+  OnboardingDurationRoute: OnboardingDurationRoute,
+  OnboardingFocusRoute: OnboardingFocusRoute,
+  OnboardingLanguageRoute: OnboardingLanguageRoute,
+  OnboardingLevelRoute: OnboardingLevelRoute,
+  OnboardingTopicRoute: OnboardingTopicRoute,
+  OnboardingUploadRoute: OnboardingUploadRoute,
+  SessionDoneRoute: SessionDoneRoute,
+  SessionLessonRoute: SessionLessonRoute,
+  SessionQuizRoute: SessionQuizRoute,
+  SessionReadRoute: SessionReadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
