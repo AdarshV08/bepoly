@@ -2,10 +2,8 @@
 export async function extractPdfText(file: File): Promise<{ text: string; pages: number }> {
   if (typeof window === "undefined") throw new Error("PDF parsing must run in the browser");
   const pdfjs = await import("pdfjs-dist");
-  // Use CDN worker matching installed version to avoid bundling pitfalls
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const version = (pdfjs as any).version as string;
-  pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
+  const workerUrl = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")).default;
+  pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
   const buf = await file.arrayBuffer();
   const doc = await pdfjs.getDocument({ data: buf }).promise;
   let text = "";
