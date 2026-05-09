@@ -10,6 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SessionReadRouteImport } from './routes/session/read'
+import { Route as SessionQuizRouteImport } from './routes/session/quiz'
+import { Route as SessionLessonRouteImport } from './routes/session/lesson'
+import { Route as SessionDoneRouteImport } from './routes/session/done'
 import { Route as OnboardingUploadRouteImport } from './routes/onboarding/upload'
 import { Route as OnboardingTopicRouteImport } from './routes/onboarding/topic'
 import { Route as OnboardingLevelRouteImport } from './routes/onboarding/level'
@@ -22,6 +26,26 @@ import { Route as ApiAiRouteImport } from './routes/api/ai'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionReadRoute = SessionReadRouteImport.update({
+  id: '/session/read',
+  path: '/session/read',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionQuizRoute = SessionQuizRouteImport.update({
+  id: '/session/quiz',
+  path: '/session/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionLessonRoute = SessionLessonRouteImport.update({
+  id: '/session/lesson',
+  path: '/session/lesson',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionDoneRoute = SessionDoneRouteImport.update({
+  id: '/session/done',
+  path: '/session/done',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingUploadRoute = OnboardingUploadRouteImport.update({
@@ -75,6 +99,10 @@ export interface FileRoutesByFullPath {
   '/onboarding/level': typeof OnboardingLevelRoute
   '/onboarding/topic': typeof OnboardingTopicRoute
   '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +114,10 @@ export interface FileRoutesByTo {
   '/onboarding/level': typeof OnboardingLevelRoute
   '/onboarding/topic': typeof OnboardingTopicRoute
   '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +130,10 @@ export interface FileRoutesById {
   '/onboarding/level': typeof OnboardingLevelRoute
   '/onboarding/topic': typeof OnboardingTopicRoute
   '/onboarding/upload': typeof OnboardingUploadRoute
+  '/session/done': typeof SessionDoneRoute
+  '/session/lesson': typeof SessionLessonRoute
+  '/session/quiz': typeof SessionQuizRoute
+  '/session/read': typeof SessionReadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +147,10 @@ export interface FileRouteTypes {
     | '/onboarding/level'
     | '/onboarding/topic'
     | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +162,10 @@ export interface FileRouteTypes {
     | '/onboarding/level'
     | '/onboarding/topic'
     | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
   id:
     | '__root__'
     | '/'
@@ -133,6 +177,10 @@ export interface FileRouteTypes {
     | '/onboarding/level'
     | '/onboarding/topic'
     | '/onboarding/upload'
+    | '/session/done'
+    | '/session/lesson'
+    | '/session/quiz'
+    | '/session/read'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +193,10 @@ export interface RootRouteChildren {
   OnboardingLevelRoute: typeof OnboardingLevelRoute
   OnboardingTopicRoute: typeof OnboardingTopicRoute
   OnboardingUploadRoute: typeof OnboardingUploadRoute
+  SessionDoneRoute: typeof SessionDoneRoute
+  SessionLessonRoute: typeof SessionLessonRoute
+  SessionQuizRoute: typeof SessionQuizRoute
+  SessionReadRoute: typeof SessionReadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -154,6 +206,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/read': {
+      id: '/session/read'
+      path: '/session/read'
+      fullPath: '/session/read'
+      preLoaderRoute: typeof SessionReadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/quiz': {
+      id: '/session/quiz'
+      path: '/session/quiz'
+      fullPath: '/session/quiz'
+      preLoaderRoute: typeof SessionQuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/lesson': {
+      id: '/session/lesson'
+      path: '/session/lesson'
+      fullPath: '/session/lesson'
+      preLoaderRoute: typeof SessionLessonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session/done': {
+      id: '/session/done'
+      path: '/session/done'
+      fullPath: '/session/done'
+      preLoaderRoute: typeof SessionDoneRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding/upload': {
@@ -225,6 +305,10 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingLevelRoute: OnboardingLevelRoute,
   OnboardingTopicRoute: OnboardingTopicRoute,
   OnboardingUploadRoute: OnboardingUploadRoute,
+  SessionDoneRoute: SessionDoneRoute,
+  SessionLessonRoute: SessionLessonRoute,
+  SessionQuizRoute: SessionQuizRoute,
+  SessionReadRoute: SessionReadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
