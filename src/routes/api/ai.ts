@@ -1,8 +1,7 @@
 import "@tanstack/react-start";
 import { createFileRoute } from "@tanstack/react-router";
-import { generateText } from "ai";
 import { z } from "zod";
-import { createLovableAiGatewayProvider } from "@/lib/ai-gateway";
+import { lovableChat } from "@/lib/ai-gateway";
 
 const MODEL = "google/gemini-2.5-flash";
 
@@ -76,9 +75,6 @@ export const Route = createFileRoute("/api/ai")({
           pdfText?: string;
         };
 
-        const gateway = createLovableAiGatewayProvider(key);
-        const model = gateway(MODEL);
-
         const lvl = body.level ?? "A2";
         const lang = body.language ?? "English";
         const focus = body.focus ?? "Grammar";
@@ -89,7 +85,14 @@ The learner's CEFR level is ${lvl}. Adapt complexity strictly to that level.
 Always respond with ONLY valid JSON (no prose, no markdown fences) matching the requested schema exactly.`;
 
         async function gen<T>(prompt: string, schema: z.ZodType<T>): Promise<T> {
-          const { text } = await generateText({ model, system: baseSystem, prompt });
+          const text = await lovableChat({
+            apiKey: key!,
+            model: MODEL,
+            messages: [
+              { role: "system", content: baseSystem },
+              { role: "user", content: prompt },
+            ],
+          });
           const cleaned = text.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "");
           const start = cleaned.indexOf("{");
           const end = cleaned.lastIndexOf("}");
@@ -97,6 +100,7 @@ Always respond with ONLY valid JSON (no prose, no markdown fences) matching the 
           const parsed = JSON.parse(jsonStr);
           return schema.parse(parsed);
         }
+
 
         try {
           if (body.action === "extract_topics") {
