@@ -77,6 +77,19 @@ function UploadPage() {
             <FileCheck className="h-7 w-7 text-success" />
             <p className="font-bold">{pdfName}</p>
             <p className="text-xs text-muted-foreground">Tap to choose another</p>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setStore({ pdfText: "", pdfName: "" });
+                if (inputRef.current) inputRef.current.value = "";
+                setError(null);
+              }}
+              className="mt-2 inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground btn-press"
+            >
+              <X className="h-3.5 w-3.5" /> Remove PDF
+            </button>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2">
