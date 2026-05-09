@@ -82,7 +82,7 @@ function UploadPage() {
           <div className="flex flex-col items-center gap-2">
             <FileUp className="h-7 w-7 text-primary" />
             <p className="font-bold">Drop a PDF here or tap to choose</p>
-            <p className="text-xs text-muted-foreground">Up to 50 pages will be read</p>
+            <p className="text-xs text-muted-foreground">Up to 60 pages will be read</p>
           </div>
         )}
       </motion.label>
