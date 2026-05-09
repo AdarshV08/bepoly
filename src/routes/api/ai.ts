@@ -86,64 +86,54 @@ export const Route = createFileRoute("/api/ai")({
 
         const baseSystem = `You are BePoly, a warm, expert ${lang} tutor.
 The learner's CEFR level is ${lvl}. Adapt complexity strictly to that level.
-Always respond in clear, structured JSON matching the requested schema.`;
+Always respond with ONLY valid JSON (no prose, no markdown fences) matching the requested schema exactly.`;
+
+        async function gen<T>(prompt: string, schema: z.ZodType<T>): Promise<T> {
+          const { text } = await generateText({ model, system: baseSystem, prompt });
+          const cleaned = text.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/i, "");
+          const start = cleaned.indexOf("{");
+          const end = cleaned.lastIndexOf("}");
+          const jsonStr = start >= 0 && end > start ? cleaned.slice(start, end + 1) : cleaned;
+          const parsed = JSON.parse(jsonStr);
+          return schema.parse(parsed);
+        }
 
         try {
           if (body.action === "extract_topics") {
             const sample = (body.pdfText ?? "").slice(0, 8000);
             const prompt = sample
-              ? `From the following text, extract 6 to 10 distinct learning topics, chapter titles, or sections relevant for studying ${focus} in ${lang} at level ${lvl}. Prefer the actual table of contents or section headings if present. Return concise topic names (3-8 words each).\n\nTEXT:\n${sample}`
-              : `Generate 6-8 relevant ${focus} topics in ${lang} suitable for a ${lvl} learner. Concise topic names (3-8 words each).`;
-            const { object } = await generateObject({
-              model,
-              system: baseSystem,
-              prompt,
-              schema: topicsSchema,
-            });
-            return Response.json(object);
+              ? `From the following text, extract 6 to 10 distinct learning topics, chapter titles, or sections relevant for studying ${focus} in ${lang} at level ${lvl}. Prefer the actual table of contents or section headings if present. Return concise topic names (3-8 words each).\n\nReturn JSON: { "topics": string[] }\n\nTEXT:\n${sample}`
+              : `Generate 6-8 relevant ${focus} topics in ${lang} suitable for a ${lvl} learner. Concise topic names (3-8 words each).\n\nReturn JSON: { "topics": string[] }`;
+            return Response.json(await gen(prompt, topicsSchema));
           }
 
           if (body.action === "generate_lesson") {
-            const prompt = `Create a focused ${focus} lesson in ${lang} on the topic: "${topic}".
-Level: ${lvl}. The lesson must:
-- Have a short engaging title and a 2-3 sentence intro.
-- Contain 2-4 sections with a clear heading, a short explanation (4-6 sentences max — no walls of text), and 2-3 worked examples.
-- Each example: "source" is the ${lang} sentence, "target" is the English translation, optional "note" with a tiny grammar hint.
-- End with 3-5 crisp keyTakeaways bullet strings.
-- Use ${lvl}-appropriate vocabulary and structures.`;
-            const { object } = await generateObject({
-              model,
-              system: baseSystem,
-              prompt,
-              schema: lessonSchema,
-            });
-            return Response.json(object);
+            const prompt = `Create a focused ${focus} lesson in ${lang} on the topic: "${topic}". Level: ${lvl}.
+Return JSON shape:
+{
+  "title": string,
+  "intro": string (2-3 sentences),
+  "sections": [{ "heading": string, "body": string (4-6 sentences), "examples": [{ "source": string, "target": string, "note"?: string }] }],
+  "keyTakeaways": string[] (3-5 bullets)
+}
+Include 2-4 sections, each with 2-3 examples. Use ${lvl}-appropriate vocabulary.`;
+            return Response.json(await gen(prompt, lessonSchema));
           }
 
           if (body.action === "generate_quiz") {
-            const prompt = `Create a 5-7 question quiz in ${lang} testing the topic: "${topic}" (focus: ${focus}, level: ${lvl}).
-Mix question types: "mcq" (4 options), "fill" (use ___ for the blank), and "reorder" (tokens shuffled — provide correctOrder as indices into the original tokens that produce the correct sentence).
-Include a brief, kind "explain" string for each.
-Keep it tightly tied to the lesson topic.`;
-            const { object } = await generateObject({
-              model,
-              system: baseSystem,
-              prompt,
-              schema: quizSchema,
-            });
-            return Response.json(object);
+            const prompt = `Create a 5-7 question quiz in ${lang} on topic "${topic}" (focus: ${focus}, level: ${lvl}).
+Return JSON: { "questions": Question[] } where Question is one of:
+- { "type": "mcq", "q": string, "options": string[] (4 items), "answerIndex": number, "explain": string }
+- { "type": "fill", "sentence": string (use ___ for blank), "answer": string, "explain": string }
+- { "type": "reorder", "tokens": string[], "correctOrder": number[], "explain": string }
+Mix all three types. Keep it tied to the topic.`;
+            return Response.json(await gen(prompt, quizSchema));
           }
 
           if (body.action === "generate_paragraph") {
-            const prompt = `Write a single short paragraph in ${lang} (5 to 8 sentences) that heavily uses the grammar/vocabulary from the topic "${topic}" at level ${lvl}.
-The paragraph should be natural and read aloud well. Then list 4-8 key words or phrases from the paragraph that exemplify the topic in "highlights".`;
-            const { object } = await generateObject({
-              model,
-              system: baseSystem,
-              prompt,
-              schema: paragraphSchema,
-            });
-            return Response.json(object);
+            const prompt = `Write a single short paragraph in ${lang} (5-8 sentences) heavily using the grammar/vocabulary from "${topic}" at level ${lvl}.
+Return JSON: { "paragraph": string, "highlights": string[] (4-8 key words/phrases from the paragraph) }`;
+            return Response.json(await gen(prompt, paragraphSchema));
           }
 
           return new Response("Unknown action", { status: 400 });
