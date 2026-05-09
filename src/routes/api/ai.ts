@@ -101,13 +101,13 @@ Always respond in clear, structured JSON matching the requested schema.`;
             const prompt = sample
               ? `From the following text, extract 6 to 10 distinct learning topics, chapter titles, or sections relevant for studying ${focus} in ${lang} at level ${lvl}. Prefer the actual table of contents or section headings if present. Return concise topic names (3-8 words each).\n\nTEXT:\n${sample}`
               : `Generate 6-8 relevant ${focus} topics in ${lang} suitable for a ${lvl} learner. Concise topic names (3-8 words each).`;
-            const { output } = await generateText({
+            const { object } = await generateObject({
               model,
               system: baseSystem,
               prompt,
-              experimental_output: Output.object({ schema: topicsSchema }),
+              schema: topicsSchema,
             });
-            return Response.json(output);
+            return Response.json(object);
           }
 
           if (body.action === "generate_lesson") {
@@ -118,13 +118,13 @@ Level: ${lvl}. The lesson must:
 - Each example: "source" is the ${lang} sentence, "target" is the English translation, optional "note" with a tiny grammar hint.
 - End with 3-5 crisp keyTakeaways bullet strings.
 - Use ${lvl}-appropriate vocabulary and structures.`;
-            const { output } = await generateText({
+            const { object } = await generateObject({
               model,
               system: baseSystem,
               prompt,
-              experimental_output: Output.object({ schema: lessonSchema }),
+              schema: lessonSchema,
             });
-            return Response.json(output);
+            return Response.json(object);
           }
 
           if (body.action === "generate_quiz") {
@@ -132,25 +132,25 @@ Level: ${lvl}. The lesson must:
 Mix question types: "mcq" (4 options), "fill" (use ___ for the blank), and "reorder" (tokens shuffled — provide correctOrder as indices into the original tokens that produce the correct sentence).
 Include a brief, kind "explain" string for each.
 Keep it tightly tied to the lesson topic.`;
-            const { output } = await generateText({
+            const { object } = await generateObject({
               model,
               system: baseSystem,
               prompt,
-              experimental_output: Output.object({ schema: quizSchema }),
+              schema: quizSchema,
             });
-            return Response.json(output);
+            return Response.json(object);
           }
 
           if (body.action === "generate_paragraph") {
             const prompt = `Write a single short paragraph in ${lang} (5 to 8 sentences) that heavily uses the grammar/vocabulary from the topic "${topic}" at level ${lvl}.
 The paragraph should be natural and read aloud well. Then list 4-8 key words or phrases from the paragraph that exemplify the topic in "highlights".`;
-            const { output } = await generateText({
+            const { object } = await generateObject({
               model,
               system: baseSystem,
               prompt,
-              experimental_output: Output.object({ schema: paragraphSchema }),
+              schema: paragraphSchema,
             });
-            return Response.json(output);
+            return Response.json(object);
           }
 
           return new Response("Unknown action", { status: 400 });
