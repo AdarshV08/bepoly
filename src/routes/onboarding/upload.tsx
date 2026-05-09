@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { ArrowRight, FileUp, Loader2, FileCheck } from "lucide-react";
+import { ArrowRight, FileUp, Loader2, FileCheck, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { OnboardingShell } from "@/components/OnboardingShell";
 import { extractPdfText } from "@/lib/pdf";
