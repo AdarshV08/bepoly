@@ -10,11 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingUploadRouteImport } from './routes/onboarding/upload'
+import { Route as OnboardingTopicRouteImport } from './routes/onboarding/topic'
+import { Route as OnboardingLevelRouteImport } from './routes/onboarding/level'
+import { Route as OnboardingLanguageRouteImport } from './routes/onboarding/language'
+import { Route as OnboardingFocusRouteImport } from './routes/onboarding/focus'
+import { Route as OnboardingDurationRouteImport } from './routes/onboarding/duration'
+import { Route as OnboardingBooksRouteImport } from './routes/onboarding/books'
 import { Route as ApiAiRouteImport } from './routes/api/ai'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingUploadRoute = OnboardingUploadRouteImport.update({
+  id: '/onboarding/upload',
+  path: '/onboarding/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingTopicRoute = OnboardingTopicRouteImport.update({
+  id: '/onboarding/topic',
+  path: '/onboarding/topic',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingLevelRoute = OnboardingLevelRouteImport.update({
+  id: '/onboarding/level',
+  path: '/onboarding/level',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingLanguageRoute = OnboardingLanguageRouteImport.update({
+  id: '/onboarding/language',
+  path: '/onboarding/language',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingFocusRoute = OnboardingFocusRouteImport.update({
+  id: '/onboarding/focus',
+  path: '/onboarding/focus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingDurationRoute = OnboardingDurationRouteImport.update({
+  id: '/onboarding/duration',
+  path: '/onboarding/duration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingBooksRoute = OnboardingBooksRouteImport.update({
+  id: '/onboarding/books',
+  path: '/onboarding/books',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAiRoute = ApiAiRouteImport.update({
@@ -26,27 +68,83 @@ const ApiAiRoute = ApiAiRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/ai': typeof ApiAiRoute
+  '/onboarding/books': typeof OnboardingBooksRoute
+  '/onboarding/duration': typeof OnboardingDurationRoute
+  '/onboarding/focus': typeof OnboardingFocusRoute
+  '/onboarding/language': typeof OnboardingLanguageRoute
+  '/onboarding/level': typeof OnboardingLevelRoute
+  '/onboarding/topic': typeof OnboardingTopicRoute
+  '/onboarding/upload': typeof OnboardingUploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/ai'
+  fullPaths:
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/ai'
-  id: '__root__' | '/' | '/api/ai'
+  to:
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/ai'
+    | '/onboarding/books'
+    | '/onboarding/duration'
+    | '/onboarding/focus'
+    | '/onboarding/language'
+    | '/onboarding/level'
+    | '/onboarding/topic'
+    | '/onboarding/upload'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiAiRoute: typeof ApiAiRoute
+  OnboardingBooksRoute: typeof OnboardingBooksRoute
+  OnboardingDurationRoute: typeof OnboardingDurationRoute
+  OnboardingFocusRoute: typeof OnboardingFocusRoute
+  OnboardingLanguageRoute: typeof OnboardingLanguageRoute
+  OnboardingLevelRoute: typeof OnboardingLevelRoute
+  OnboardingTopicRoute: typeof OnboardingTopicRoute
+  OnboardingUploadRoute: typeof OnboardingUploadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -56,6 +154,55 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/upload': {
+      id: '/onboarding/upload'
+      path: '/onboarding/upload'
+      fullPath: '/onboarding/upload'
+      preLoaderRoute: typeof OnboardingUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/topic': {
+      id: '/onboarding/topic'
+      path: '/onboarding/topic'
+      fullPath: '/onboarding/topic'
+      preLoaderRoute: typeof OnboardingTopicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/level': {
+      id: '/onboarding/level'
+      path: '/onboarding/level'
+      fullPath: '/onboarding/level'
+      preLoaderRoute: typeof OnboardingLevelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/language': {
+      id: '/onboarding/language'
+      path: '/onboarding/language'
+      fullPath: '/onboarding/language'
+      preLoaderRoute: typeof OnboardingLanguageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/focus': {
+      id: '/onboarding/focus'
+      path: '/onboarding/focus'
+      fullPath: '/onboarding/focus'
+      preLoaderRoute: typeof OnboardingFocusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/duration': {
+      id: '/onboarding/duration'
+      path: '/onboarding/duration'
+      fullPath: '/onboarding/duration'
+      preLoaderRoute: typeof OnboardingDurationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/books': {
+      id: '/onboarding/books'
+      path: '/onboarding/books'
+      fullPath: '/onboarding/books'
+      preLoaderRoute: typeof OnboardingBooksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/ai': {
@@ -71,7 +218,24 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiAiRoute: ApiAiRoute,
+  OnboardingBooksRoute: OnboardingBooksRoute,
+  OnboardingDurationRoute: OnboardingDurationRoute,
+  OnboardingFocusRoute: OnboardingFocusRoute,
+  OnboardingLanguageRoute: OnboardingLanguageRoute,
+  OnboardingLevelRoute: OnboardingLevelRoute,
+  OnboardingTopicRoute: OnboardingTopicRoute,
+  OnboardingUploadRoute: OnboardingUploadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
